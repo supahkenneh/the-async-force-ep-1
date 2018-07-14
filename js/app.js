@@ -44,22 +44,40 @@ getFilmList.send();
 getFilmList.addEventListener('load', function () {
   const parseFilmList = JSON.parse(this.responseText);
   const filmList = document.getElementById('filmList');
-
+  
   for (let i = 0; i < parseFilmList.results.length; i++) {
-
+    
     const newFilm = document.createElement('li');
     newFilm.className = 'film';
     filmList.appendChild(newFilm);
-
+    
     const filmHeader = document.createElement('h2');
     newFilm.appendChild(filmHeader);
     filmHeader.innerHTML = parseFilmList.results[i].title;
+
+    const planetHeader = document.createElement('h3');
+    planetHeader.innerHTML = 'Planets';
+    newFilm.appendChild(planetHeader);
+    
+    const planetList = document.createElement('ul');
+    planetList.className = 'filmPlanets';
+    
+    for (let j = 0; j < parseFilmList.results[i].planets.length; j++){
+      const getPlanetList = new XMLHttpRequest();
+      getPlanetList.open('GET', parseFilmList.results[i].planets[j]);
+      getPlanetList.send();
+
+      getPlanetList.addEventListener('load', function () {
+        const parsePlanetList = JSON.parse(this.responseText);
+        const newPlanet = document.createElement('li');
+        newPlanet.className = 'planet';
+        newFilm.appendChild(newPlanet);
+        newPlanet.innerHTML = parsePlanetList.name;
+      })
+    }
   }
 })
 
-const getPlanetList = new XMLHttpRequest();
-getPlanetList.open('GET', );
-getPlanetList.send();
 
 
 
