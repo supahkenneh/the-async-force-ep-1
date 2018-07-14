@@ -1,3 +1,4 @@
+//Get Darth Vader Stats
 const darthVader = new XMLHttpRequest();
 darthVader.open('GET', "https://swapi.co/api/people/4/");
 darthVader.send();
@@ -18,6 +19,7 @@ darthVaderHome.addEventListener('load', function () {
   document.getElementById('person4HomeWorld').innerHTML = 'from ' + parseDarthVaderHome.name;
 })
 
+//Get Han Solo Stats
 const hanSolo = new XMLHttpRequest();
 hanSolo.open('GET', "https://swapi.co/api/people/14");
 hanSolo.send();
@@ -36,12 +38,13 @@ hanSoloSpecies.addEventListener('load', function () {
   document.getElementById('person14Species').innerHTML = 'is a ' + parseHanSoloSpecies.name;
 })
 
-const getFilmList = new XMLHttpRequest();
-getFilmList.open('GET', "https://swapi.co/api/films/");
-getFilmList.send();
+//Get Films
+const getFilms = new XMLHttpRequest();
+getFilms.open('GET', "https://swapi.co/api/films/");
+getFilms.send();
 
-
-getFilmList.addEventListener('load', function () {
+getFilms.addEventListener('load', function () {
+//create film <li> and planet header for each film
   const parseFilmList = JSON.parse(this.responseText);
   const filmList = document.getElementById('filmList');
   
@@ -62,7 +65,9 @@ getFilmList.addEventListener('load', function () {
     const planetList = document.createElement('ul');
     planetList.className = 'filmPlanets';
     
+//for each film, create <li> of planets featured in each film
     for (let j = 0; j < parseFilmList.results[i].planets.length; j++){
+
       const getPlanetList = new XMLHttpRequest();
       getPlanetList.open('GET', parseFilmList.results[i].planets[j]);
       getPlanetList.send();
